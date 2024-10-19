@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animations</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="circularButton">
+      <button id="toggleToolbox">+</button>
+    </div>
+
+    <div id="toolbox">
+      <div id="toolboxWindow1" class="toolboxWindow">
+        <h3 class="drag-handle">Toolkit Window</h3>
+
+        <label for="numPoints">Number of Points:</label>
+        <input type="range" id="numPoints" min="1" max="200" value="100" />
+        <div id="pointCountDisplay">Number of Points: 100</div>
+
+        <button id="startButton">Start Animation</button>
+      </div>
+
+      <div id="toolboxWindow2" class="toolboxWindow">
+        <h3 class="drag-handle">Custom Equations</h3>
+
+        <div id="expressionInputs">
+          <label for="dxdt">Enter dx/dt (use x, y, z):</label>
+          <input type="text" id="dxdt" value="y * z" disabled />
+
+          <label for="dydt">Enter dy/dt (use x, y, z):</label>
+          <input type="text" id="dydt" value="x - y" disabled />
+
+          <label for="dzdt">Enter dz/dt (use x, y, z):</label>
+          <input type="text" id="dzdt" value="1 - x ** 2" disabled />
+
+          <label for="enableExpressions">
+            <input type="checkbox" id="enableExpressions" />
+            Enable expressions
+          </label>
+        </div>
+      </div>
+
+      <div id="toolboxWindow3" class="toolboxWindow">
+        <h3 class="drag-handle">Custom Colors</h3>
+
+        <div id="colorInputs">
+          <div>
+            <div class="color-input-group">
+              <label for="color1">Choose Color 1:</label>
+              <input type="color" id="color1" value="#99ccff" />
+            </div>
+
+            <div class="color-input-group">
+              <label for="color2">Choose Color 2:</label>
+              <input type="color" id="color2" value="#3399ff" />
+            </div>
+
+            <div class="color-input-group">
+              <label for="color3">Choose Color 3:</label>
+              <input type="color" id="color3" value="#0033cc" />
+            </div>
+          </div>
+
+         
+        </div>
+      </div>
+
+      <div id="toolboxWindow3" class="toolboxWindow">
+        <h3 class="drag-handle">Render Plane</h3>
+
+          <div id="planeSelection">
+            <label
+              ><input type="radio" name="plane" value="xy" checked /> XY
+              Plane</label
+            >
+            <label
+              ><input type="radio" name="plane" value="xz" /> XZ Plane</label
+            >
+            <label
+              ><input type="radio" name="plane" value="yz" /> YZ Plane</label
+            >
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <script src="script3.js"></script>
+    <script>
+      // Function to keep the toolbox inside the canvas bounds
+      function keepToolboxInsideCanvas() {
+        const toolbox = document.getElementById("toolbox");
+        const canvas = document.getElementById("canvas");
+
+        const canvasRect = canvas.getBoundingClientRect();
+        const toolboxRect = toolbox.getBoundingClientRect();
+
+        // Check if the toolbox is going beyond the canvas bounds
+        if (toolboxRect.right > canvasRect.right) {
+          toolbox.style.left = canvasRect.right - toolboxRect.width + "px";
+        }
+        if (toolboxRect.left < canvasRect.left) {
+          toolbox.style.left = canvasRect.left + "px";
+        }
+        if (toolboxRect.bottom > canvasRect.bottom) {
+          toolbox.style.top = canvasRect.bottom - toolboxRect.height + "px";
+        }
+        if (toolboxRect.top < canvasRect.top) {
+          toolbox.style.top = canvasRect.top + "px";
+        }
+      }
+
+      document
+        .getElementById("toggleToolbox")
+        .addEventListener("click", function () {
+          const toolbox = document.getElementById("toolbox");
+          if (
+            toolbox.style.display === "none" ||
+            toolbox.style.display === ""
+          ) {
+            toolbox.style.display = "block";
+          } else {
+            toolbox.style.display = "none";
+          }
+        });
+    </script>
+  </body>
+</html>
